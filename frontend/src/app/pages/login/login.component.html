@@ -1,0 +1,74 @@
+<div class="page">
+  <div class="card">
+    <h1>Asset Live Tracking</h1>
+    <p class="subtitle">Sign in to continue</p>
+
+    <div class="tabs">
+      <button type="button" class="tab" [class.active]="mode === 'signin'" (click)="setMode('signin')">Sign in</button>
+      <button type="button" class="tab" [class.active]="mode === 'signup'" (click)="setMode('signup')">Sign up</button>
+    </div>
+
+    <form *ngIf="mode === 'signin'" (ngSubmit)="onLocalSignIn()" class="form">
+      <label class="label">
+        Username
+        <input class="input" name="signinUsername" [(ngModel)]="signin.username" autocomplete="username" required />
+      </label>
+
+      <label class="label">
+        Password
+        <input
+          class="input"
+          type="password"
+          name="signinPassword"
+          [(ngModel)]="signin.password"
+          autocomplete="current-password"
+          required
+        />
+      </label>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">Sign in</button>
+    </form>
+
+    <form *ngIf="mode === 'signup'" (ngSubmit)="onLocalSignUp()" class="form">
+      <label class="label">
+        Username
+        <input class="input" name="signupUsername" [(ngModel)]="signup.username" autocomplete="username" required />
+      </label>
+
+      <label class="label">
+        Email (optional)
+        <input class="input" type="email" name="signupEmail" [(ngModel)]="signup.email" autocomplete="email" />
+      </label>
+
+      <label class="label">
+        Password
+        <input
+          class="input"
+          type="password"
+          name="signupPassword"
+          [(ngModel)]="signup.password"
+          autocomplete="new-password"
+          required
+        />
+      </label>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">Create account</button>
+    </form>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+    <div class="divider"></div>
+
+    <button type="button" class="btn btn-google" (click)="onGoogleLogin()">
+      Continue with Google
+    </button>
+
+    <button type="button" class="btn btn-azure" (click)="onAzureAdLogin()">
+      Continue with Azure AD
+    </button>
+
+    <p class="hint">
+      You will be redirected to your organization login.
+    </p>
+  </div>
+</div>

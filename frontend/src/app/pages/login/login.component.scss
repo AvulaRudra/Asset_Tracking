@@ -1,0 +1,155 @@
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #0b1220;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #121a2b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+h1 {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  font-weight: 650;
+  color: #eaf0ff;
+}
+
+.subtitle {
+  margin: 0 0 18px 0;
+  color: rgba(234, 240, 255, 0.7);
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 16px 0;
+}
+
+.tab {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(234, 240, 255, 0.85);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(234, 240, 255, 0.75);
+}
+
+.input {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #eaf0ff;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.btn {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #eaf0ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: rgba(99, 102, 241, 0.20);
+  border-color: rgba(99, 102, 241, 0.45);
+  margin-top: 0;
+}
+
+.btn-primary:hover {
+  background: rgba(99, 102, 241, 0.28);
+}
+
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  margin: 16px 0;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.error {
+  margin: 12px 0 0 0;
+  color: #ffb4b4;
+  font-size: 12px;
+}
+
+.btn-google {
+  background: rgba(234, 67, 53, 0.16);
+  border-color: rgba(234, 67, 53, 0.35);
+}
+
+.btn-google:hover {
+  background: rgba(234, 67, 53, 0.22);
+}
+
+.btn-azure {
+  background: rgba(0, 120, 212, 0.16);
+  border-color: rgba(0, 120, 212, 0.35);
+}
+
+.btn-azure:hover {
+  background: rgba(0, 120, 212, 0.22);
+}
+
+.hint {
+  margin: 16px 0 0 0;
+  color: rgba(234, 240, 255, 0.6);
+  font-size: 12px;
+  line-height: 1.5;
+}
