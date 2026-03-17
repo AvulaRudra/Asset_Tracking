@@ -74,18 +74,21 @@ builder.Services.AddAuthentication(options =>
 })
 .AddGoogle(options =>
 {
-    options.ClientId = builder.Configuration["Google:ClientId"] ?? "";
-    options.ClientSecret = builder.Configuration["Google:ClientSecret"] ?? "";
+    options.ClientId = builder.Configuration["Google__ClientId"] ?? "";
+    options.ClientSecret = builder.Configuration["Google__ClientSecret"] ?? "";
     options.CallbackPath = "/auth/google/callback";
 })
+// Azure AD - Commented out
+/*
 .AddMicrosoftAccount(options => // Azure AD
 {
-    options.ClientId = builder.Configuration["Azure:ClientId"] ?? "";
-    options.ClientSecret = builder.Configuration["Azure:ClientSecret"] ?? "";
+    options.ClientId = builder.Configuration["Azure__ClientId"] ?? "";
+    options.ClientSecret = builder.Configuration["Azure__ClientSecret"] ?? "";
     options.CallbackPath = "/auth/azure/callback";
-    options.AuthorizationEndpoint = $"https://login.microsoftonline.com/{builder.Configuration["Azure:TenantId"] ?? "common"}/oauth2/v2.0/authorize";
-    options.TokenEndpoint = $"https://login.microsoftonline.com/{builder.Configuration["Azure:TenantId"] ?? "common"}/oauth2/v2.0/token";
+    options.AuthorizationEndpoint = $"https://login.microsoftonline.com/{builder.Configuration["Azure__TenantId"] ?? "common"}/oauth2/v2.0/authorize";
+    options.TokenEndpoint = $"https://login.microsoftonline.com/{builder.Configuration["Azure__TenantId"] ?? "common"}/oauth2/v2.0/token";
 });
+*/
 
 var app = builder.Build();
 
