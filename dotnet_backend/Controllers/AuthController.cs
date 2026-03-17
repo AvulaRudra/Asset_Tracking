@@ -47,7 +47,9 @@ public class AuthController : ControllerBase
         var redirectTo = $"{_frontendBaseUrl}/login?token={token}";
         return Redirect(redirectTo);
     }
-    // Similar for Azure - configure in Program.cs if needed
+    
+    // Azure AD Login - Commented out
+    /*
     [HttpGet("azure/login")]
     public IActionResult AzureLogin()
     {
@@ -72,5 +74,6 @@ public class AuthController : ControllerBase
         var redirectTo = $"{_frontendBaseUrl}/login?token={token}";
         return Redirect(redirectTo);
     }
+    */
 }
 
