@@ -11,8 +11,12 @@ using dotnet_backend.Data;
 using dotnet_backend.Repositories;
 using dotnet_backend.Services;
 using Microsoft.OpenApi.Models;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Load .env file
+Env.Load();
 
 // Add services
 builder.Services.AddControllers();
@@ -31,9 +35,12 @@ builder.Services.AddCors(options =>
     });
 });
 
-// DB Context (SQLite example)
+// DB Context (PostgreSQL) - reads from .env or appsettings
+var pgConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+    throw new InvalidOperationException("Connection string not configured in .env or appsettings.json");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=app.db"));
+    options.UseNpgsql(pgConnectionString));
 
 // Core services (Singleton)
 builder.Services.AddSingleton<JwtService>();

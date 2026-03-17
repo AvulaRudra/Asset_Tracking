@@ -1,0 +1,34 @@
+# .NET build outputs
+bin/
+obj/
+out/
+
+# User secrets
+.env
+*.env
+
+# IDE files
+.vs/
+.vscode/
+*.user
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+TestResults/
+coverage/
+
+# Packages
+*.nupkg
+*.snupkg
