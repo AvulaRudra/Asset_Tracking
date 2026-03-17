@@ -87,10 +87,7 @@ export class LoginComponent {
     this.authService.loginWithGoogle();
   }
 
-  // Azure AD Login - Commented out
-  /*
   onAzureAdLogin(): void {
     this.authService.loginWithAzureAd();
   }
-  */
 }

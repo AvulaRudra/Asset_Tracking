@@ -6,6 +6,7 @@ out/
 # User secrets
 .env
 *.env
+appsettings.json
 
 # IDE files
 .vs/

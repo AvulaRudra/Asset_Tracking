@@ -10,7 +10,6 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   position: relative;
   overflow: hidden;
-  background: #f8fafc;
 }
 
 .background-container {
@@ -123,7 +122,6 @@ h1 {
   svg {
     width: 18px;
     height: 18px;
-    flex-shrink: 0;
   }
 }
 
@@ -141,18 +139,26 @@ h1 {
   font-weight: 500;
   color: #374151;
   margin-bottom: 8px;
-  position: relative;
   
-  svg {
-    position: absolute;
-    top: 44px;
-    left: 16px;
-    transform: translateY(-50%);
-    color: #9ca3af;
-    width: 20px;
-    height: 20px;
-    z-index: 1;
-    pointer-events: none;
+  .label-text {
+    display: block;
+    margin-bottom: 6px;
+  }
+  
+  .input-wrapper {
+    position: relative;
+    
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      width: 20px;
+      height: 20px;
+      z-index: 1;
+      pointer-events: none;
+    }
   }
 }
 
@@ -164,7 +170,6 @@ h1 {
   font-size: 15px;
   transition: all 0.2s ease;
   background: white;
-  box-sizing: border-box;
   
   &:focus {
     outline: none;
@@ -182,8 +187,6 @@ h1 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 12px;
 }
 
 .checkbox-label {
@@ -193,14 +196,11 @@ h1 {
   color: #6b7280;
   cursor: pointer;
   position: relative;
-  user-select: none;
   
   .checkbox {
     position: absolute;
     opacity: 0;
     cursor: pointer;
-    height: 0;
-    width: 0;
     
     &:checked ~ .checkmark {
       background: #667eea;
@@ -220,7 +220,6 @@ h1 {
     margin-right: 8px;
     position: relative;
     transition: all 0.2s ease;
-    flex-shrink: 0;
     
     &:after {
       content: '';
@@ -243,7 +242,6 @@ h1 {
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  white-space: nowrap;
   
   &:hover {
     text-decoration: underline;
@@ -265,7 +263,6 @@ h1 {
   gap: 8px;
   position: relative;
   overflow: hidden;
-  box-sizing: border-box;
   
   &:disabled {
     opacity: 0.6;
@@ -300,7 +297,7 @@ h1 {
 
 .alert {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   padding: 16px;
   border-radius: 10px;
@@ -315,7 +312,6 @@ h1 {
   
   svg {
     flex-shrink: 0;
-    margin-top: 1px;
   }
 }
 
@@ -356,7 +352,6 @@ h1 {
   svg {
     width: 20px;
     height: 20px;
-    flex-shrink: 0;
   }
   
   &:hover {
@@ -375,50 +370,18 @@ h1 {
   font-size: 13px;
   color: #6b7280;
   margin-top: 24px;
-  flex-wrap: wrap;
   
   svg {
     width: 16px;
     height: 16px;
     color: #10b981;
-    flex-shrink: 0;
   }
 }
 
-// Tablet and below
-@media (max-width: 768px) {
-  .page {
-    padding: 16px;
-  }
-  
-  .card {
-    padding: 40px 32px;
-    max-width: 100%;
-  }
-  
-  h1 {
-    font-size: 28px;
-  }
-  
-  .subtitle {
-    font-size: 15px;
-  }
-  
-  .tab {
-    padding: 10px 20px;
-    font-size: 13px;
-    
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
-}
-
-// Mobile and below
+// Responsive design
 @media (max-width: 480px) {
   .page {
-    padding: 12px;
+    padding: 16px;
   }
   
   .card {
@@ -440,7 +403,7 @@ h1 {
   }
   
   h1 {
-    font-size: 24px;
+    font-size: 28px;
   }
   
   .subtitle {
@@ -452,13 +415,12 @@ h1 {
   }
   
   .tab {
-    padding: 8px 16px;
-    font-size: 12px;
-    gap: 6px;
+    padding: 10px 16px;
+    font-size: 13px;
     
     svg {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
     }
   }
   
@@ -468,36 +430,29 @@ h1 {
   
   .label {
     font-size: 13px;
-    
-    svg {
-      top: 42px;
-      left: 14px;
-      width: 18px;
-      height: 18px;
-    }
   }
   
   .input {
-    padding: 10px 14px 10px 44px;
+    padding: 12px 16px 12px 44px;
     font-size: 14px;
-    border-radius: 8px;
+  }
+  
+  .input-wrapper svg {
+    left: 14px;
+    width: 18px;
+    height: 18px;
   }
   
   .form-options {
-    margin-bottom: 20px;
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
+    margin-bottom: 20px;
   }
   
   .btn {
     padding: 12px 20px;
     font-size: 14px;
-  }
-  
-  .alert {
-    padding: 12px;
-    font-size: 13px;
   }
   
   .divider {
@@ -509,8 +464,9 @@ h1 {
     }
   }
   
-  .sso-container {
-    margin-bottom: 20px;
+  .alert {
+    padding: 12px;
+    font-size: 13px;
   }
   
   .security-note {
@@ -519,26 +475,63 @@ h1 {
   }
 }
 
-// Small mobile
 @media (max-width: 360px) {
   .card {
     padding: 24px 20px;
   }
   
   h1 {
-    font-size: 22px;
+    font-size: 24px;
   }
   
   .tab {
     padding: 8px 12px;
-    font-size: 11px;
+    font-size: 12px;
+    
+    svg {
+      display: none;
+    }
   }
   
   .input {
-    padding: 10px 12px 10px 40px;
+    padding: 10px 14px 10px 40px;
   }
   
-  .label svg {
+  .input-wrapper svg {
     left: 12px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    max-width: 480px;
+    padding: 56px;
+  }
+  
+  h1 {
+    font-size: 36px;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    max-width: 520px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .card {
+    max-width: 560px;
+    padding: 64px;
+  }
+  
+  h1 {
+    font-size: 40px;
   }
 }

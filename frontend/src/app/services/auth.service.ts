@@ -12,10 +12,7 @@ export class AuthService {
     window.location.href = `${this.apiBaseUrl}/auth/google/login`;
   }
 
-  // Azure AD Login - Commented out
-  /*
   loginWithAzureAd(): void {
     window.location.href = `${this.apiBaseUrl}/auth/azure/login`;
   }
-  */
 }
