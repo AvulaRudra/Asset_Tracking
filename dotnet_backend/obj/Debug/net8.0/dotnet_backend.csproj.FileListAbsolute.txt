@@ -166,6 +166,7 @@ C:\Users\10848551\Desktop\Asset_Tracker\Asset_Tracking\dotnet_backend\obj\Debug\
 C:\Users\10848551\Desktop\Asset_Tracker\Asset_Tracking\dotnet_backend\obj\Debug\net8.0\dotnet_backend.pdb
 C:\Users\10848551\Desktop\Asset_Tracker\Asset_Tracking\dotnet_backend\obj\Debug\net8.0\dotnet_backend.genruntimeconfig.cache
 C:\Users\10848551\Desktop\Asset_Tracker\Asset_Tracking\dotnet_backend\obj\Debug\net8.0\ref\dotnet_backend.dll
+<<<<<<< HEAD
 C:\Users\avula\OneDrive\Desktop\Assest_Tracker\dotnet_backend\obj\Debug\net8.0\dotnet_backend.csproj.AssemblyReference.cache
 C:\Users\avula\OneDrive\Desktop\Assest_Tracker\dotnet_backend\obj\Debug\net8.0\dotnet_backend.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\avula\OneDrive\Desktop\Assest_Tracker\dotnet_backend\obj\Debug\net8.0\dotnet_backend.AssemblyInfoInputs.cache
@@ -313,3 +314,6 @@ C:\Users\avula\OneDrive\Desktop\Assest_Tracker\dotnet_backend\obj\Debug\net8.0\s
 C:\Users\avula\OneDrive\Desktop\Assest_Tracker\dotnet_backend\obj\Debug\net8.0\dotnet_b.FB21AC37.Up2Date
 C:\Users\avula\OneDrive\Desktop\Assest_Tracker\dotnet_backend\obj\Debug\net8.0\dotnet_backend.genruntimeconfig.cache
 C:\Users\avula\OneDrive\Desktop\Assest_Tracker\dotnet_backend\obj\Debug\net8.0\ref\dotnet_backend.dll
+=======
+>>>>>>> 95eb6a2624f52656d8fed93a711bd1dda23dba79
+C:\Users\avula\OneDrive\Desktop\Assest_Tracker\dotnet_backend\bin\Debug\net8.0\appsettings.example.json
