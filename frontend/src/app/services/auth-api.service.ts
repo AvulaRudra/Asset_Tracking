@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface AuthResponseDto {
-  access_token: string;
-  token_type: string;
+  AccessToken: string;
+  TokenType?: string;
 }
 
 export interface SignUpRequestDto {

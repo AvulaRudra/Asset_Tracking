@@ -26,7 +26,7 @@ public class LocalAuthController : ControllerBase
         }
         catch (ArgumentException ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new { detail = ex.Message });
         }
     }
 
@@ -40,7 +40,7 @@ public class LocalAuthController : ControllerBase
         }
         catch (ArgumentException ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new { detail = ex.Message });
         }
     }
 }

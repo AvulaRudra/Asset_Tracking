@@ -1,9 +1,18 @@
-# Fix JwtService compilation errors
+# Login Fix Progress
 
-## Steps:
-- [x] 1. Read LocalAuthService.cs content
-- [x] 2. Edit AuthService.cs to add `using dotnet_backend.Core;`
-- [x] 3. Edit LocalAuthService.cs to add `using dotnet_backend.Core;` (not needed - already present)
-- [x] 4. Update TODO.md with progress
-- [x] 5. Build project to verify: `dotnet build dotnet_backend/dotnet_backend.csproj`
-- [x] 6. Mark complete
+## Completed
+- [x] Update API base URL to http://localhost:5000 (environment*.ts)
+- [x] Fix AuthResponseDto casing to PascalCase (AccessToken)
+- [x] Update login.component.ts to use res.AccessToken
+
+## Next
+- Restart Angular dev server: cd frontend && ng serve
+- Test login at http://localhost:4200/login
+- Check browser Network tab for POST /auth/local/login -> 200 OK
+- Verify localStorage 'access_token' set
+- If error, provide new console/network info.
+
+Backend endpoints work (Swagger confirmed).
+
+Task complete once login succeeds from frontend.
+

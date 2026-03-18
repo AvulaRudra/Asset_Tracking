@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\avula\\OneDrive\\Desktop\\Assest_Tracker\\dotnet_backend\\dotnet_backend.csproj": {}
+    "C:\\Users\\10848551\\Desktop\\Asset_Tracker\\Asset_Tracking\\dotnet_backend\\dotnet_backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\avula\\OneDrive\\Desktop\\Assest_Tracker\\dotnet_backend\\dotnet_backend.csproj": {
+    "C:\\Users\\10848551\\Desktop\\Asset_Tracker\\Asset_Tracking\\dotnet_backend\\dotnet_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\avula\\OneDrive\\Desktop\\Assest_Tracker\\dotnet_backend\\dotnet_backend.csproj",
+        "projectUniqueName": "C:\\Users\\10848551\\Desktop\\Asset_Tracker\\Asset_Tracking\\dotnet_backend\\dotnet_backend.csproj",
         "projectName": "dotnet_backend",
-        "projectPath": "C:\\Users\\avula\\OneDrive\\Desktop\\Assest_Tracker\\dotnet_backend\\dotnet_backend.csproj",
-        "packagesPath": "C:\\Users\\avula\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\avula\\OneDrive\\Desktop\\Assest_Tracker\\dotnet_backend\\obj\\",
+        "projectPath": "C:\\Users\\10848551\\Desktop\\Asset_Tracker\\Asset_Tracking\\dotnet_backend\\dotnet_backend.csproj",
+        "packagesPath": "C:\\Users\\10848551\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\10848551\\Desktop\\Asset_Tracker\\Asset_Tracking\\dotnet_backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\avula\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\10848551\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -119,7 +119,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\8.0.419/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.419/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

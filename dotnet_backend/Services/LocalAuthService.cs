@@ -39,9 +39,11 @@ public class LocalAuthService : ILocalAuthService
 
     public string SignIn(string username, string password)
     {
-        var user = _repo.GetByUsername(username) ?? throw new ArgumentException("Invalid username or password");
+        var user = _repo.GetByUsername(username);
+        if (user == null)
+            throw new ArgumentException("User not found for the provided username.");
         if (!_passwordHasher.VerifyPassword(password, user.PasswordHash))
-            throw new ArgumentException("Invalid username or password");
+            throw new ArgumentException("Invalid password.");
 
         return _jwtService.CreateAccessToken(user.Id, "local", user.Email);
     }
