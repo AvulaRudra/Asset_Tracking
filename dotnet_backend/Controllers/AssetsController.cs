@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using dotnet_backend.Repositories;
+using dotnet_backend.Services;
 using dotnet_backend.DTOs;
 using dotnet_backend.Entities;
 using static dotnet_backend.Entities.UserRoles;
@@ -10,20 +10,20 @@ namespace dotnet_backend.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class AssetsController : ControllerBase
-{
-    private readonly IAssetRepository _assetRepository;
-
-    public AssetsController(IAssetRepository assetRepository)
+    public class AssetsController : ControllerBase
     {
-        _assetRepository = assetRepository;
+        private readonly IAssetService _assetService;
+
+    public AssetsController(IAssetService assetService)
+    {
+        _assetService = assetService;
     }
 
     [HttpGet]
     [Authorize("Viewer")]  // Viewer can view
     public async Task<ActionResult<IEnumerable<Asset>>> GetAssets()
     {
-        var assets = await _assetRepository.GetAllAsync();
+        var assets = await _assetService.GetAllAsync();
         return Ok(assets);
     }
 
@@ -31,7 +31,7 @@ public class AssetsController : ControllerBase
     [Authorize("Viewer")]
     public async Task<ActionResult<Asset>> GetAsset(int id)
     {
-        var asset = await _assetRepository.GetByIdAsync(id);
+        var asset = await _assetService.GetByIdAsync(id);
         if (asset == null) return NotFound();
         return Ok(asset);
     }
@@ -40,7 +40,7 @@ public class AssetsController : ControllerBase
     [Authorize("Admin")]  // Admin CRUD
     public async Task<ActionResult<Asset>> CreateAsset(CreateAssetDto assetDto)
     {
-        var asset = await _assetRepository.CreateAsync(assetDto);
+        var asset = await _assetService.CreateAsync(assetDto);
         return CreatedAtAction(nameof(GetAsset), new { id = asset.ID }, asset);
     }
 
@@ -48,7 +48,7 @@ public class AssetsController : ControllerBase
     [Authorize("Admin")]
     public async Task<ActionResult<Asset>> UpdateAsset(int id, AssetDto assetDto)
     {
-        var updated = await _assetRepository.UpdateAsync(id, assetDto);
+        var updated = await _assetService.UpdateAsync(id, assetDto);
         if (updated == null) return NotFound();
         return Ok(updated);
     }
@@ -57,7 +57,7 @@ public class AssetsController : ControllerBase
     [Authorize("Admin")]
     public async Task<IActionResult> DeleteAsset(int id)
     {
-        var deleted = await _assetRepository.DeleteAsync(id);
+        var deleted = await _assetService.DeleteAsync(id);
         if (!deleted) return NotFound();
         return NoContent();
     }

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using dotnet_backend.Repositories;
+using dotnet_backend.Services;
 using dotnet_backend.DTOs;
 using dotnet_backend.Entities;
 using static dotnet_backend.Entities.UserRoles;
@@ -10,20 +10,20 @@ namespace dotnet_backend.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class AssetTrackingController : ControllerBase
-{
-    private readonly IAssetTrackingRepository _trackingRepository;
-
-    public AssetTrackingController(IAssetTrackingRepository trackingRepository)
+    public class AssetTrackingController : ControllerBase
     {
-        _trackingRepository = trackingRepository;
+        private readonly IAssetTrackingService _trackingService;
+
+    public AssetTrackingController(IAssetTrackingService trackingService)
+    {
+        _trackingService = trackingService;
     }
 
 [HttpGet]
     [Authorize("Viewer")]  // Viewer can view all
     public async Task<ActionResult<IEnumerable<dynamic>>> GetTrackings()
     {
-        var trackings = await _trackingRepository.GetAllAsync();
+        var trackings = await _trackingService.GetAllAsync();
         return Ok(trackings);
     }
 
@@ -31,7 +31,7 @@ public class AssetTrackingController : ControllerBase
     [Authorize("Viewer")]
     public async Task<ActionResult<IEnumerable<dynamic>>> GetByAssetId(int assetId)
     {
-        var trackings = await _trackingRepository.GetByAssetIdAsync(assetId);
+        var trackings = await _trackingService.GetByAssetIdAsync(assetId);
         return Ok(trackings);
     }
 
@@ -40,7 +40,7 @@ public class AssetTrackingController : ControllerBase
     public async Task<ActionResult<AssetTracking>> CreateTracking(int assetId, CreateAssetTrackingDto trackingDto)
     {
         trackingDto.AssetId = assetId;  // Set from route
-        var tracking = await _trackingRepository.CreateAsync(trackingDto);
+        var tracking = await _trackingService.CreateAsync(trackingDto);
         return CreatedAtAction(nameof(GetByAssetId), new { assetId }, tracking);
     }
 
@@ -48,7 +48,7 @@ public class AssetTrackingController : ControllerBase
     [Authorize(UserRoles.Admin)]
     public async Task<ActionResult<AssetTracking>> UpdateTracking(int assetId, AssetTrackingDto trackingDto)
     {
-        var updated = await _trackingRepository.UpdateAsync(assetId, trackingDto);
+        var updated = await _trackingService.UpdateAsync(assetId, trackingDto);
         if (updated == null) return NotFound();
         return Ok(updated);
     }
@@ -57,7 +57,7 @@ public class AssetTrackingController : ControllerBase
     [Authorize(UserRoles.Admin)]
     public async Task<IActionResult> DeleteTracking(int id)
     {
-        var deleted = await _trackingRepository.DeleteAsync(id);
+        var deleted = await _trackingService.DeleteAsync(id);
         if (!deleted) return NotFound();
         return NoContent();
     }
