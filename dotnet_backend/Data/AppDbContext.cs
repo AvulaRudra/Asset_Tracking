@@ -33,7 +33,7 @@ public DbSet<User> Users { get; set; } = null!;
             entity.Property(e => e.Username).HasMaxLength(50);
             entity.HasIndex(e => e.Username).IsUnique();
             entity.Property(e => e.Email).HasMaxLength(320);
-            entity.HasIndex(e => e.Email).IsUnique().HasFilter("\"Email\" IS NOT NULL");
+            entity.HasIndex(e => e.Email).IsUnique().HasFilter("[Email] IS NOT NULL");
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
         });
 
