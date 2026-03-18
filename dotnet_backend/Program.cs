@@ -49,9 +49,17 @@ builder.Services.AddScoped<ILocalUserRepository, LocalUserRepository>();
 // Services (Scoped)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ILocalAuthService, LocalAuthService>();
+builder.Services.AddScoped<IAssetRepository, AssetRepository>();
+builder.Services.AddScoped<IAssetTrackingRepository, AssetTrackingRepository>();
 builder.Services.AddSwaggerGen();
 // Auth (JWT + Google + Azure)
 var jwtSecret = builder.Configuration["Jwt:Secret"] ?? "your-super-secret-jwt-key-that-is-at-least-32-chars";
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("Viewer", policy => policy.RequireRole("Viewer"));
+});
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

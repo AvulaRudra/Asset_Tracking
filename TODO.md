@@ -1,16 +1,16 @@
-# Gitignore Issues Fix Plan - COMPLETE
+# Asset/AssetTracking Repositories & Controllers Plan
 ## Steps:
-1. [x] git rm --cached -r dotnet_backend/obj/  (remove tracked obj files)
-2. [x] No need for appsettings.json rm --cached (not tracked, git status clean)
-3. [x] git add .gitignore
-4. [x] git commit -m 'Fix .gitignore: remove tracked build artifacts; appsettings.json already ignored'
-5. [x] git push
-6. [x] dotnet clean executed
-7. [x] Verified: git status clean, up to date with origin. Obj/ and appsettings.json now ignored.
+1. [x] Create IAssetRepository.cs & AssetRepository.cs
+2. [x] Create IAssetTrackingRepository.cs & AssetTrackingRepository.cs (fixed DTO/PK)
+3. [x] Create AssetsController.cs (Admin CRUD, Viewer GET)
+4. [x] Create AssetTrackingController.cs (Viewer GET, Admin CRUD)
+5. [x] Update Program.cs for role policies and DI
+6. [ ] dotnet build & test
+7. [ ] Commit/push
 
 ## Notes:
-- appsettings.json already in .gitignore and not tracked.
-- Copy dotnet_backend/appsettings.example.json to appsettings.json for local use if needed.
-- Future: Run `dotnet clean` before git status to avoid build artifacts.
-- Issue resolved: Git no longer tries to push ignored files.
+- Async CRUD.
+- Use existing DTOs.
+- [Authorize(Policy = "Admin")] for CRUD, "Viewer" for GET.
+- Dependency injection via constructor.
 

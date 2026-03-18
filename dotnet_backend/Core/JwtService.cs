@@ -23,7 +23,8 @@ public class JwtService
         {
             new Claim(ClaimTypes.NameIdentifier, subject),
             new Claim("provider", provider),
-            new Claim(ClaimTypes.Email, email ?? "")
+            new Claim(ClaimTypes.Email, email ?? ""),
+            new Claim(ClaimTypes.Role, "Admin")  // Default or from user.Role
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));

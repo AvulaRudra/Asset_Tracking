@@ -23,6 +23,7 @@ public DbSet<User> Users { get; set; } = null!;
             entity.Property(e => e.Id).HasMaxLength(64);
             entity.Property(e => e.Provider).HasMaxLength(32);
             entity.Property(e => e.Email).HasMaxLength(320);
+            entity.Property(e => e.Role).HasMaxLength(20).HasDefaultValue("Viewer");
         });
 
         // LocalUsers table
@@ -35,6 +36,7 @@ public DbSet<User> Users { get; set; } = null!;
             entity.Property(e => e.Email).HasMaxLength(320);
             entity.HasIndex(e => e.Email).IsUnique().HasFilter("\"Email\" IS NOT NULL");
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
+            entity.Property(e => e.Role).HasMaxLength(20).HasDefaultValue("Viewer");
         });
 
         // Asset Tracking relationship

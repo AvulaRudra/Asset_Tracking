@@ -20,5 +20,10 @@ public class LocalUser
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
+    [MaxLength(20)]
+    public string Role { get; set; } = "Viewer";
 }
+
+
 
