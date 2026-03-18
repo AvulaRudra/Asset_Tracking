@@ -116,9 +116,6 @@ obj/
 *.sqlite3
 
 # Backend config files with secrets
-backend/appsettings.json
-backend/appsettings.Development.json
-backend/appsettings.Production.json
 dotnet_backend/appsettings.json
 dotnet_backend/appsettings.Development.json
 dotnet_backend/appsettings.Production.json
