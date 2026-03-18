@@ -49,6 +49,8 @@ builder.Services.AddScoped<ILocalUserRepository, LocalUserRepository>();
 // Services (Scoped)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ILocalAuthService, LocalAuthService>();
+builder.Services.AddScoped<IAssetService, AssetService>();
+builder.Services.AddScoped<IAssetTrackingService, AssetTrackingService>();
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
 builder.Services.AddScoped<IAssetTrackingRepository, AssetTrackingRepository>();
 builder.Services.AddSwaggerGen();
