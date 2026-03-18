@@ -1,4 +1,6 @@
 dotnet_backend/.config/
-dotnet_backend/bin/
+dotnet_backend/bin/debug/net8.0/
 dotnet_backend/appsettings.json
 dotnet_backend/Migrations
+dotnet_backend/obj/Debug/
+dotnet_backend/obj/
