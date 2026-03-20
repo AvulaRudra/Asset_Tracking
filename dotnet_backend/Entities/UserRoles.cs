@@ -5,4 +5,3 @@ public static class UserRoles
     public const string Viewer = "Viewer";
     public const string Admin = "Admin";
 }
-

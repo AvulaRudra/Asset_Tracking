@@ -17,14 +17,14 @@ public class JwtService
         _expiresMinutes = int.Parse(config["Jwt:ExpiresMinutes"] ?? "60");
     }
 
-    public string CreateAccessToken(string subject, string provider, string? email)
+public string CreateAccessToken(string subject, string provider, string? email, string role = "Viewer")
     {
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, subject),
             new Claim("provider", provider),
             new Claim(ClaimTypes.Email, email ?? ""),
-            new Claim(ClaimTypes.Role, "Admin")  // Default or from user.Role
+            new Claim(ClaimTypes.Role, role)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));

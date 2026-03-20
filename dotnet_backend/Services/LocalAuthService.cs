@@ -34,7 +34,7 @@ public class LocalAuthService : ILocalAuthService
         };
         _repo.Create(user);
 
-        return _jwtService.CreateAccessToken(userId, "local", email);
+        return _jwtService.CreateAccessToken(userId, "local", email, user.Role);
     }
 
     public string SignIn(string username, string password)
@@ -43,7 +43,7 @@ public class LocalAuthService : ILocalAuthService
         if (!_passwordHasher.VerifyPassword(password, user.PasswordHash))
             throw new ArgumentException("Invalid username or password");
 
-        return _jwtService.CreateAccessToken(user.Id, "local", user.Email);
+        return _jwtService.CreateAccessToken(user.Id, "local", user.Email, user.Role);
     }
 }
 

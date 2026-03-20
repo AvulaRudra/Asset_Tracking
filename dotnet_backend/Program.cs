@@ -1,117 +1,132 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using dotnet_backend.Core;
 using dotnet_backend.Data;
 using dotnet_backend.Repositories;
 using dotnet_backend.Services;
-using Microsoft.OpenApi.Models;
-
+ 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services
+ 
+// 1. SERVICES
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// CORS
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "Asset Tracker", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        Description = "Input 'Bearer' + space + token"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference 
+                { 
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+ 
+// Session — used to store OAuth state for CSRF protection
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name        = ".AppSession";
+    options.Cookie.SameSite    = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.HttpOnly    = true;
+    options.IdleTimeout        = TimeSpan.FromMinutes(10);
+});
+ 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("DevCors", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200", "https://localhost:5001")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
     });
 });
-
-// DB Context (PostgreSQL) - reads from .env or appsettings
-var pgConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-    throw new InvalidOperationException("Connection string not configured in .env or appsettings.json");
-
+ 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(pgConnectionString));
-
-// Core services (Singleton)
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+ 
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSingleton<PasswordHasher>();
-
-// Repositories (Scoped)
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ILocalUserRepository, LocalUserRepository>();
-
-// Services (Scoped)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ILocalAuthService, LocalAuthService>();
 builder.Services.AddScoped<IAssetService, AssetService>();
 builder.Services.AddScoped<IAssetTrackingService, AssetTrackingService>();
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
-builder.Services.AddScoped<IAssetTrackingRepository, AssetTrackingRepository>();
-builder.Services.AddSwaggerGen();
-// Auth (JWT + Google + Azure)
-var jwtSecret = builder.Configuration["Jwt:Secret"] ?? "your-super-secret-jwt-key-that-is-at-least-32-chars";
+builder.Services.AddScoped<IAssetTrackingRepository, AssetTrackingRepository>(); 
+ 
+// 2. AUTH + POLICIES
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-    options.AddPolicy("Viewer", policy => policy.RequireRole("Viewer"));
+    options.AddPolicy("Admin", p => p.RequireRole("Admin"));
+options.AddPolicy("Viewer", p => p.RequireRole(new[] { "Viewer", "Admin" }));
 });
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-})
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
-        ValidateIssuer = false,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"] ?? "secret")),
+        ValidateIssuer   = false,
         ValidateAudience = false,
-        ClockSkew = TimeSpan.Zero
+        ClockSkew        = TimeSpan.Zero
     };
-})
-.AddGoogle(options =>
-{
-    options.ClientId = builder.Configuration["Google:ClientId"] ?? "";
-    options.ClientSecret = builder.Configuration["Google:ClientSecret"] ?? "";
-    options.CallbackPath = "/auth/google/callback";
 });
-// Azure AD - Commented out
-/*
-.AddMicrosoftAccount(options => // Azure AD
-{
-    options.ClientId = builder.Configuration["Azure__ClientId"] ?? "";
-    options.ClientSecret = builder.Configuration["Azure__ClientSecret"] ?? "";
-    options.CallbackPath = "/auth/azure/callback";
-    options.AuthorizationEndpoint = $"https://login.microsoftonline.com/{builder.Configuration["Azure__TenantId"] ?? "common"}/oauth2/v2.0/authorize";
-    options.TokenEndpoint = $"https://login.microsoftonline.com/{builder.Configuration["Azure__TenantId"] ?? "common"}/oauth2/v2.0/token";
-});
-*/
-
+ 
 var app = builder.Build();
-
-// Configure pipeline
+ 
+// 3. MIDDLEWARE
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+ 
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
+ 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors("DevCors");
+app.UseRouting();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
-
-app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
-
 app.Run();
-

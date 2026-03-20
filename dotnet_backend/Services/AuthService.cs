@@ -16,8 +16,8 @@ public class AuthService : IAuthService
 
     public string HandleSsoLogin(string provider, string subject, string? email)
     {
-        _userRepository.Upsert(provider, subject, email);
-        return _jwtService.CreateAccessToken(subject, provider, email);
+        var user = _userRepository.Upsert(provider, subject, email);
+        return _jwtService.CreateAccessToken(subject, provider, email, user.Role);
     }
 }
 

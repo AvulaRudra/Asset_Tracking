@@ -35,5 +35,25 @@ public class LocalUserRepository : ILocalUserRepository
         _db.SaveChanges();
         return user;
     }
+
+    public async Task<LocalUser?> GetByIdOrEmailAsync(string idOrEmail)
+    {
+        if (idOrEmail.Contains("@"))
+        {
+            return await _db.LocalUsers.FirstOrDefaultAsync(u => u.Email == idOrEmail);
+        }
+        return await _db.LocalUsers.FirstOrDefaultAsync(u => u.Id == idOrEmail);
+    }
+
+    public async Task UpdateRoleAsync(string id, string newRole)
+    {
+        var user = await _db.LocalUsers.FirstOrDefaultAsync(u => u.Id == id);
+        if (user != null)
+        {
+            user.Role = newRole;
+            user.UpdatedAt = DateTime.UtcNow;
+            await _db.SaveChangesAsync();
+        }
+    }
 }
 

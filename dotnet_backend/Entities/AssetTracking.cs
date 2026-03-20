@@ -5,6 +5,8 @@ namespace dotnet_backend.Entities;
 
 public class AssetTracking
 {
+    [Key]
+    public int Id { get; set; }
     [Required]
     public DateTime Timestamp { get; set; }
 

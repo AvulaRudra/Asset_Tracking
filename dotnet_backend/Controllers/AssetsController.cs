@@ -20,33 +20,39 @@ namespace dotnet_backend.Controllers;
     }
 
     [HttpGet]
-    [Authorize("Viewer")]  // Viewer can view
-    public async Task<ActionResult<IEnumerable<Asset>>> GetAssets()
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<AssetDto>>> GetAssets()
     {
-        var assets = await _assetService.GetAllAsync();
+        var assets = await _assetService.GetAllDtoAsync();
         return Ok(assets);
     }
 
     [HttpGet("{id}")]
-    [Authorize("Viewer")]
-    public async Task<ActionResult<Asset>> GetAsset(int id)
+    [Authorize]
+    public async Task<ActionResult<AssetDto>> GetAsset(int id)
     {
-        var asset = await _assetService.GetByIdAsync(id);
+        var asset = await _assetService.GetByIdDtoAsync(id);
         if (asset == null) return NotFound();
         return Ok(asset);
     }
 
     [HttpPost]
     [Authorize("Admin")]  // Admin CRUD
-    public async Task<ActionResult<Asset>> CreateAsset(CreateAssetDto assetDto)
+    public async Task<ActionResult<AssetDto>> CreateAsset(CreateAssetDto assetDto)
     {
         var asset = await _assetService.CreateAsync(assetDto);
-        return CreatedAtAction(nameof(GetAsset), new { id = asset.ID }, asset);
+        var assetDtoResult = new AssetDto
+        {
+            Id = asset.ID,
+            Type = asset.Type,
+            Trackings = new List<AssetTrackingDto>()
+        };
+        return CreatedAtAction(nameof(GetAsset), new { id = asset.ID }, assetDtoResult);
     }
 
     [HttpPut("{id}")]
     [Authorize("Admin")]
-    public async Task<ActionResult<Asset>> UpdateAsset(int id, AssetDto assetDto)
+    public async Task<ActionResult<AssetDto>> UpdateAsset(int id, AssetDto assetDto)
     {
         var updated = await _assetService.UpdateAsync(id, assetDto);
         if (updated == null) return NotFound();
